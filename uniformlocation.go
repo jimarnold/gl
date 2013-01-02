@@ -100,7 +100,10 @@ func (location UniformLocation) Uniform4iv(count int, v []int32) {
 	C.glUniform4iv(C.GLint(location), C.GLsizei(count), (*C.GLint)(&v[0]))
 }
 
-//Can't really tie this to a specific matrix type, so just take a pointer to the first element and assume it's a simple, column-major array layout
-func (location UniformLocation) UniformMatrix4fv(fv *float32) {
+func (location UniformLocation) UniformMatrix4fv(fv []*float32) {
+	C.glUniformMatrix4fv(C.GLint(location), C.GLsizei(len(fv)), C.GL_FALSE, (*C.GLfloat)(fv[0]))
+}
+
+func (location UniformLocation) UniformMatrix4f(fv *float32) {
 	C.glUniformMatrix4fv(C.GLint(location), C.GLsizei(1), C.GL_FALSE, (*C.GLfloat)(fv))
 }
